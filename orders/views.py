@@ -1,11 +1,12 @@
 import os
+import stripe
 from django.shortcuts import render, get_object_or_404
 from .models import OrderItem, Order, Product
 from .forms import OrderCreateForm
 from cart.views import get_cart, cart_clear
 from decimal import Decimal
 from dotenv import load_dotenv
-import stripe
+from .tasks import order_created
 
 load_dotenv()
 
@@ -46,6 +47,8 @@ def order_create(request):
             )
 
             cart_clear(request)
+
+            order_created.delay(order.id)
 
             return render(request, "order_created.html", {"order": order})
     else:
