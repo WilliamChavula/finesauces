@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "accounts.apps.AccountsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -142,3 +143,7 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAUL_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "listings:product_list"
+LOGOUT_REDIRECT_URL = "listings:product_list"
